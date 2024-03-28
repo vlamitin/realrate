@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for x in "$@"; do
+	[ -z $(command -v "$x") ] && notify-send "📦 $x" "must be installed for this function." && exit 1
+done

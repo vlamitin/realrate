@@ -1,0 +1,41 @@
+{
+  "supportedCrypto": [
+    {
+      "code": "USDT",
+      "synonyms": [
+        "₮",
+        "tether"
+      ]
+    },
+    {
+      "code": "BTC",
+      "synonyms": [
+        "₿",
+        "bitcoin"
+      ]
+    }
+  ],
+  "supportedFiat": [
+    {
+      "code": "USD",
+      "synonyms": [
+        "$",
+        "dollar"
+      ]
+    },
+    {
+      "code": "EUR",
+      "synonyms": [
+        "€",
+        "euro"
+      ]
+    },
+    {
+      "code": "KZT",
+      "synonyms": [
+        "₸",
+        "tenge"
+      ]
+    }
+  ]
+}

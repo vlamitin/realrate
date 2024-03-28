@@ -1,0 +1,34 @@
+{
+  "selectedFrom": "BTC",
+  "selectedTo": "KZT",
+  "fetchedCryptoRates": [
+    {
+      "from": "BTC",
+      "to": "USDT",
+      "rate": 69784.7982867,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    }
+  ],
+  "fetchedFiatRates": [
+    {
+      "from": "EUR",
+      "to": "KZT",
+      "rate": 486.78,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    },
+    {
+      "from": "USD",
+      "to": "KZT",
+      "rate": 449.836,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    }
+  ],
+  "fetchedCryptoToFiatRates": [
+    {
+      "from": "USDT",
+      "to": "USD",
+      "rate": 1,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    }
+  ]
+}
