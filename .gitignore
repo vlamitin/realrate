@@ -1,3 +1,5 @@
 .idea
 linux-app/venv
 linux-app/__pycache__
+linux-app/rr_config.json
+linux-app/rr_storage.json

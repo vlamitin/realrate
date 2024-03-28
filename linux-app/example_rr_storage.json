@@ -1,6 +1,15 @@
 {
   "selectedFrom": "BTC",
   "selectedTo": "KZT",
+  "favoriteCrypto": [
+    "BTC",
+    "USDT"
+  ],
+  "favoriteFiat": [
+    "USD",
+    "EUR",
+    "KZT"
+  ],
   "fetchedCryptoRates": [
     {
       "from": "BTC",
