@@ -2,6 +2,8 @@ import argparse
 
 import command_set_from
 import command_set_to
+import command_add_favorite
+import command_clean_favorite
 
 
 # returns (result<str>, errMsg)
@@ -9,21 +11,16 @@ def run_scenario():
     arg_parser = argparse.ArgumentParser(prog="realrate", description="Type realrate {command} -h for each command help")
     subparsers = arg_parser.add_subparsers(title="commands", dest="command")
 
-    command_set_from_parser = subparsers.add_parser('set_from', help=command_set_from.DESCRIPTION)
-    command_set_from.add_arguments(command_set_from_parser)
-
-    command_set_to_parser = subparsers.add_parser('set_to', help=command_set_to.DESCRIPTION)
-    command_set_to.add_arguments(command_set_to_parser)
-
+    command_set_from.add_arguments(subparsers.add_parser('set_from', help=command_set_from.DESCRIPTION))
+    command_set_to.add_arguments(subparsers.add_parser('set_to', help=command_set_to.DESCRIPTION))
+    command_add_favorite.add_arguments(subparsers.add_parser('add_favorite', help=command_add_favorite.DESCRIPTION))
+    command_clean_favorite.add_arguments(subparsers.add_parser('clean_favorite', help=command_clean_favorite.DESCRIPTION))
 
     # get_rates - shows rate for 1 unit, depending on what is selected
     #   if crypto is selected - shows its rates in favorite fiats; if fiat is selected - shows favorite crypto rates
     # calculate_commissions - shows comparison of selected price with fair market price
     #   selected price should be the number, and "from" and "to" should be previously set
-    # add_favorite - adds selected code to favorite crypto/fiat
     # clean_favorite - removes selected code from favorite crypto/fiat
-    # set_from - sets selected code as "from"
-    # set_to - sets selected code as "to"
 
     args = arg_parser.parse_args()
     args_dict = vars(args)
@@ -32,8 +29,10 @@ def run_scenario():
         return command_set_from.set_from(command_set_from.parse_args(args_dict))
     elif args_dict['command'] == 'set_to':
         return command_set_to.set_to(command_set_to.parse_args(args_dict))
-    # elif args_dict['command'] == 'open_jira_tasks':
-    #     open_jira_tasks.run_scenario()
+    elif args_dict['command'] == 'add_favorite':
+        return command_add_favorite.add_favorite(command_add_favorite.parse_args(args_dict))
+    elif args_dict['command'] == 'clean_favorite':
+        return command_clean_favorite.clean_favorite(command_clean_favorite.parse_args(args_dict))
     # elif args_dict['command'] == 'merge_prs_local':
     #     arguments_dict = merge_prs_local.parse_args(args_dict)
     #     merge_prs_local.run_scenario(arguments_dict['merge_branch_name'], arguments_dict['base_branch_name'])

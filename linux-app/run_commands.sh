@@ -23,7 +23,7 @@ setFrom() {
   if [ $lastCode -eq 0 ]; then
     notify-send -t 10000 "Success!" "\n$result"
   else
-    verboseExit "Failed to set '$truncatedFS' as \"from\"" "\n$result"
+    verboseExit "Fail" "\n$result"
   fi
 }
 
@@ -35,16 +35,42 @@ setTo() {
   if [ $lastCode -eq 0 ]; then
     notify-send -t 10000 "Success!" "\n$result"
   else
-    notify-send -t 35000 -u critical "Failed to set '$truncatedFS' as \"to\"" "\n$result"
+    notify-send -t 35000 -u critical "Fail" "\n$result"
+  fi
+}
+
+addFavorite() {
+  source ./venv/bin/activate
+  result=$(python realrate.py add_favorite  --code $truncatedFS)
+  lastCode=$?
+
+  if [ $lastCode -eq 0 ]; then
+    notify-send -t 10000 "Success!" "\n$result"
+  else
+    notify-send -t 35000 -u critical "Fail" "\n$result"
+  fi
+}
+
+cleanFavorite() {
+  source ./venv/bin/activate
+  result=$(python realrate.py clean_favorite  --code $truncatedFS)
+  lastCode=$?
+
+  if [ $lastCode -eq 0 ]; then
+    notify-send -t 10000 "Success!" "\n$result"
+  else
+    notify-send -t 35000 -u critical "Fail" "\n$result"
   fi
 }
 
 askWhatToDoSel() {
   [ -z truncatedFS ] && verboseExit "error!" "Nothing selected!"
-  answersel=$(printf "Set as 'from'\\nSet as 'to'\\nSave with usage" | dmenu -i -p "What to do with '$truncatedFS'?") &&
+  answersel=$(printf "Set as 'from'\\nSet as 'to'\\nAdd to favorites\\nClean from favorites" | dmenu -i -p "What to do with '$truncatedFS'?") &&
   case "$answersel" in
     "Set as 'from'") setFrom;;
     "Set as 'to'") setTo ;;
+    "Add to favorites") addFavorite ;;
+    "Clean from favorites") cleanFavorite ;;
     *) verboseExit "error!" "nothing selected!" ;;
   esac
 }

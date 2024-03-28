@@ -18,21 +18,8 @@ def set_selected_from(code):
     if err_msg != "":
         return f"failed to set code: {err_msg}"
 
-    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
-    storage_path = os.path.join(configs_dir, "rr_storage.json")
-    try:
-        with open(storage_path, "w") as f:
-            storage['selectedFrom'] = code
-            f.write(
-                json.dumps(storage, indent=2, sort_keys=False) + "\n"
-            )
-            return ""
-    except FileNotFoundError:
-        return f"storage file not found in {storage_path}"
-    except json.decoder.JSONDecodeError:
-        return f"storage file {storage_path} is invalid"
-    # except:
-    #     return f"something went wrong when set selected from"
+    storage['selectedFrom'] = code
+    return _write_storage(storage)
 
 
 # returns errMsg
@@ -41,11 +28,16 @@ def set_selected_to(code):
     if err_msg != "":
         return f"failed to set code: {err_msg}"
 
+    storage['selectedTo'] = code
+    return _write_storage(storage)
+
+
+# return errMsg
+def _write_storage(storage):
     configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
         with open(storage_path, "w") as f:
-            storage['selectedTo'] = code
             f.write(
                 json.dumps(storage, indent=2, sort_keys=False) + "\n"
             )
@@ -55,7 +47,51 @@ def set_selected_to(code):
     except json.decoder.JSONDecodeError:
         return f"storage file {storage_path} is invalid"
     except:
-        return f"something went wrong when set selected from"
+        return f"something went wrong when write storage"
+
+
+# returns (added<bool>, errMsg)
+def add_favorite(code, code_type):
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return False, f"failed to add favorite: {err_msg}"
+
+    if code_type == "fiat":
+        if code in storage['favoriteFiat']:
+            return False, ""
+        storage['favoriteFiat'].append(code)
+    elif code_type == "crypto":
+        if code in storage['favoriteCrypto']:
+            return False, ""
+        storage['favoriteCrypto'].append(code)
+
+    err_msg = _write_storage(storage)
+    if err_msg != "":
+        return False, f"failed to add favorite: {err_msg}"
+
+    return True, ""
+
+
+# returns (cleaned<bool>, errMsg)
+def clean_favorite(code, code_type):
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return False, f"failed to clean favorite: {err_msg}"
+
+    if code_type == "fiat":
+        if code not in storage['favoriteFiat']:
+            return False, ""
+        storage['favoriteFiat'] = [x for x in storage['favoriteFiat'] if x != code]
+    elif code_type == "crypto":
+        if code not in storage['favoriteCrypto']:
+            return False, ""
+        storage['favoriteCrypto'] = [x for x in storage['favoriteCrypto'] if x != code]
+
+    err_msg = _write_storage(storage)
+    if err_msg != "":
+        return False, f"failed to clean favorite: {err_msg}"
+
+    return True, ""
 
 
 # returns (storage, errMsg)
