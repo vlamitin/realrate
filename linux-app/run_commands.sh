@@ -21,7 +21,7 @@ setFrom() {
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
-    notify-send -t 10000 "Success!" "\nSet $truncatedFS as as \"from\""
+    notify-send -t 10000 "Success!" "\n$result"
   else
     verboseExit "Failed to set '$truncatedFS' as \"from\"" "\n$result"
   fi
@@ -33,7 +33,7 @@ setTo() {
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
-    echo success
+    notify-send -t 10000 "Success!" "\n$result"
   else
     notify-send -t 35000 -u critical "Failed to set '$truncatedFS' as \"to\"" "\n$result"
   fi

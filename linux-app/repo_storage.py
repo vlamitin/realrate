@@ -14,10 +14,6 @@ def get_selected():
 
 # returns errMsg
 def set_selected_from(code):
-    corr_code, _, err_msg = repo_config.validate_code(code)
-    if err_msg != "":
-        return f"failed to set code: {err_msg}"
-
     storage, err_msg = _get_storage()
     if err_msg != "":
         return f"failed to set code: {err_msg}"
@@ -26,7 +22,7 @@ def set_selected_from(code):
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
         with open(storage_path, "w") as f:
-            storage['selectedFrom'] = corr_code
+            storage['selectedFrom'] = code
             f.write(
                 json.dumps(storage, indent=2, sort_keys=False) + "\n"
             )
@@ -41,10 +37,6 @@ def set_selected_from(code):
 
 # returns errMsg
 def set_selected_to(code):
-    corr_code, _, err_msg = repo_config.validate_code(code)
-    if err_msg != "":
-        return f"failed to set code: {err_msg}"
-
     storage, err_msg = _get_storage()
     if err_msg != "":
         return f"failed to set code: {err_msg}"
@@ -53,7 +45,7 @@ def set_selected_to(code):
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
         with open(storage_path, "w") as f:
-            storage['selectedTo'] = corr_code
+            storage['selectedTo'] = code
             f.write(
                 json.dumps(storage, indent=2, sort_keys=False) + "\n"
             )

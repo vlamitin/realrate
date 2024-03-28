@@ -29,9 +29,9 @@ def run_scenario():
     args_dict = vars(args)
 
     if args_dict['command'] == 'set_from':
-        return "", command_set_from.set_from(command_set_from.parse_args(args_dict))
+        return command_set_from.set_from(command_set_from.parse_args(args_dict))
     elif args_dict['command'] == 'set_to':
-        return "", command_set_to.set_to(command_set_to.parse_args(args_dict))
+        return command_set_to.set_to(command_set_to.parse_args(args_dict))
     # elif args_dict['command'] == 'open_jira_tasks':
     #     open_jira_tasks.run_scenario()
     # elif args_dict['command'] == 'merge_prs_local':

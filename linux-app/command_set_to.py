@@ -14,6 +14,14 @@ def parse_args(args_dict):
     return args_dict['code'] and args_dict['code'][0] or ''
 
 
-# returns errMsg
+# returns (successMsg, errMsg)
 def set_to(code):
-    return repo_storage.set_selected_to(code)
+    corr_code, _, err_msg = repo_config.validate_code(code)
+    if err_msg != "":
+        return "", f"failed to set 'to': {err_msg}"
+
+    err_msg = repo_storage.set_selected_to(corr_code)
+    if err_msg != "":
+        return "", f"failed to set 'to': {err_msg}"
+
+    return f"Successfully set {corr_code} as 'to'", ""
