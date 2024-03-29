@@ -4,6 +4,8 @@ import command_set_from
 import command_set_to
 import command_add_favorite
 import command_clean_favorite
+import command_calculate_commissions
+import command_clean_input
 
 
 # returns (result<str>, errMsg)
@@ -15,12 +17,13 @@ def run_scenario():
     command_set_to.add_arguments(subparsers.add_parser('set_to', help=command_set_to.DESCRIPTION))
     command_add_favorite.add_arguments(subparsers.add_parser('add_favorite', help=command_add_favorite.DESCRIPTION))
     command_clean_favorite.add_arguments(subparsers.add_parser('clean_favorite', help=command_clean_favorite.DESCRIPTION))
+    command_calculate_commissions.add_arguments(subparsers.add_parser('calculate_comissions', help=command_calculate_commissions.DESCRIPTION))
+    command_clean_input.add_arguments(subparsers.add_parser('clean_input', help=command_clean_input.DESCRIPTION))
 
     # get_rates - shows rate for 1 unit, depending on what is selected
     #   if crypto is selected - shows its rates in favorite fiats; if fiat is selected - shows favorite crypto rates
     # calculate_commissions - shows comparison of selected price with fair market price
     #   selected price should be the number, and "from" and "to" should be previously set
-    # clean_favorite - removes selected code from favorite crypto/fiat
 
     args = arg_parser.parse_args()
     args_dict = vars(args)
@@ -33,6 +36,10 @@ def run_scenario():
         return command_add_favorite.add_favorite(command_add_favorite.parse_args(args_dict))
     elif args_dict['command'] == 'clean_favorite':
         return command_clean_favorite.clean_favorite(command_clean_favorite.parse_args(args_dict))
+    elif args_dict['command'] == 'calculate_comissions':
+        return command_calculate_commissions.calculate_comissions(command_calculate_commissions.parse_args(args_dict))
+    elif args_dict['command'] == 'clean_input':
+        return command_clean_input.clean_input(command_clean_input.parse_args(args_dict))
     # elif args_dict['command'] == 'merge_prs_local':
     #     arguments_dict = merge_prs_local.parse_args(args_dict)
     #     merge_prs_local.run_scenario(arguments_dict['merge_branch_name'], arguments_dict['base_branch_name'])

@@ -12,6 +12,16 @@ def get_selected():
     return storage['selectedFrom'], storage['selectedTo'], ""
 
 
+
+# returns (fetchedCryptoRates, fetchedFiatRates, fetchedCryptoToFiatRates, errMsg)
+def get_rates():
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return None, None, None, err_msg
+
+    return storage['fetchedCryptoRates'], storage['fetchedFiatRates'],  storage['fetchedCryptoToFiatRates'], ""
+
+
 # returns errMsg
 def set_selected_from(code):
     storage, err_msg = _get_storage()

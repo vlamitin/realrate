@@ -8,6 +8,17 @@
       ]
     },
     {
+      "code": "USDC",
+      "synonyms": [
+        "circle"
+      ]
+    },
+    {
+      "code": "DAI",
+      "synonyms": [
+      ]
+    },
+    {
       "code": "BTC",
       "synonyms": [
         "₿",

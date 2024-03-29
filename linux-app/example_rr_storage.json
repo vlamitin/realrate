@@ -1,13 +1,13 @@
 {
-  "selectedFrom": "BTC",
+  "selectedFrom": "USDT",
   "selectedTo": "KZT",
   "favoriteCrypto": [
-    "BTC",
-    "USDT"
+    "USDT",
+    "BTC"
   ],
   "favoriteFiat": [
-    "USD",
     "EUR",
+    "USD",
     "KZT"
   ],
   "fetchedCryptoRates": [
@@ -35,6 +35,18 @@
   "fetchedCryptoToFiatRates": [
     {
       "from": "USDT",
+      "to": "USD",
+      "rate": 1,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    },
+    {
+      "from": "USDC",
+      "to": "USD",
+      "rate": 1,
+      "updatedAt": "2024-03-27T16:17:23.556Z"
+    },
+    {
+      "from": "DAI",
       "to": "USD",
       "rate": 1,
       "updatedAt": "2024-03-27T16:17:23.556Z"
