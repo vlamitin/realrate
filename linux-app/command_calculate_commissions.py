@@ -48,8 +48,10 @@ def calculate_comissions(selected_rate):
     commission = (selected_rate_num - market_rate) / market_rate * 100
     if commission > 0:
         return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} includes ~{__fmt(commission)}% commission", ""
-    else:
+    elif commission < 0:
         return f"Good deal! Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is ~{__fmt(abs(commission))}% more profitable", ""
+    else:
+        return f"Good deal! Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is almost the same as market rate", ""
 
 
 def _get_shortest_path(graph, code1, code2):

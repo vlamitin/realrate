@@ -73,7 +73,7 @@ def set_selected_to(code):
 def _write_storage(storage):
     """returns errMsg
     """
-    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
+    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(pathlib.Path(__file__).parent.resolve()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
         with open(storage_path, "w") as f:
