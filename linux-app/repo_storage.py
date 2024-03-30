@@ -1,5 +1,7 @@
 import json
 import os
+import pathlib
+
 import repo_config
 
 
@@ -35,6 +37,15 @@ def get_rates_as_graph():
       "EUR": {"KZT": 486.78}
     }
     """
+    return {
+        "BTC": {"USDT": 69784.7982867},
+        "USDT": {"BTC": 0.00001432976843884617181026619031, "USD": 1},
+        "USDC": {"USD": 1},
+        "DAI": {"USD": 1},
+        "USD": {"USDT": 1, "USDC": 1, "DAI": 1, "KZT": 449.836},
+        "KZT": {"USD": 0.002223032394028045713758555164, "EUR": 0.002054316118164263231956302143},
+        "EUR": {"KZT": 486.78}
+    }, ""
 
 
 def set_selected_from(code):
@@ -127,7 +138,7 @@ def clean_favorite(code, code_type):
 def _get_storage():
     """returns (storage, errMsg)
     """
-    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
+    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(pathlib.Path(__file__).parent.resolve()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
         with open(storage_path, "r") as f:

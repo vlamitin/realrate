@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 
 
 def validate_code(code):
@@ -21,7 +22,7 @@ def validate_code(code):
 
 
 def _get_config():
-    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
+    configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(pathlib.Path(__file__).parent.resolve()))
     config_path = os.path.join(configs_dir, "rr_config.json")
     try:
         with open(config_path, "r") as f:

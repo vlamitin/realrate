@@ -1,23 +1,25 @@
 #!/bin/zsh
 # runs realrate commands
 
-./ifinstalled xsel
-./ifinstalled dmenu
-./ifinstalled notify-send
-./ifinstalled xargs
-./ifinstalled awk
-./ifinstalled python
-
 fromSel=$(xsel -o)
+full_path=$(realpath "$0")
+dir_path=$(dirname "$full_path")
 
-source ./venv/bin/activate
+"$dir_path/ifinstalled" xsel
+"$dir_path/ifinstalled" dmenu
+"$dir_path/ifinstalled" notify-send
+"$dir_path/ifinstalled" xargs
+"$dir_path/ifinstalled" awk
+"$dir_path/ifinstalled" python
+
+source "$dir_path/venv/bin/activate"
 
 verboseExit() {
   echo "$2" && notify-send -t 35000 -u critical "$1" "$2" && exit 1
 }
 
 setFrom() {
-  result=$(python realrate.py set_from  --code "$1")
+  result=$(python "$dir_path/realrate.py" set_from  --code "$1")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -28,7 +30,7 @@ setFrom() {
 }
 
 calculateComissions() {
-  result=$(python realrate.py calculate_comissions  --selected_price "$1")
+  result=$(python "$dir_path/realrate.py" calculate_comissions  --selected_rate "$1")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -39,7 +41,7 @@ calculateComissions() {
 }
 
 setTo() {
-  result=$(python realrate.py set_to  --code "$1")
+  result=$(python "$dir_path/realrate.py" set_to  --code "$1")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -50,7 +52,7 @@ setTo() {
 }
 
 addFavorite() {
-  result=$(python realrate.py add_favorite  --code "$1")
+  result=$(python "$dir_path/realrate.py" add_favorite  --code "$1")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -61,7 +63,7 @@ addFavorite() {
 }
 
 cleanFavorite() {
-  result=$(python realrate.py clean_favorite  --code "$1")
+  result=$(python "$dir_path/realrate.py" clean_favorite  --code "$1")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -73,7 +75,7 @@ cleanFavorite() {
 
 askWhatToDoSel() {
   [ -z $fromSel ] && verboseExit "Fail!" "Nothing selected!"
-  cleanedSelResult=$(python realrate.py clean_input  --dirty "$fromSel")
+  cleanedSelResult=$(python "$dir_path/realrate.py" clean_input  --dirty "$fromSel")
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
