@@ -9,7 +9,7 @@ import command_clean_input
 
 
 def run_scenario():
-    """returns (result<str>, errMsg)
+    """returns (result<str>, err_msg)
     """
     arg_parser = argparse.ArgumentParser(prog="realrate", description="Type realrate {command} -h for each command help")
     subparsers = arg_parser.add_subparsers(title="commands", dest="command")
@@ -67,9 +67,9 @@ def run_scenario():
 
 if __name__ == '__main__':
     try:
-        result, errMsg = run_scenario()
-        if errMsg != "":
-            print(errMsg)
+        result, err_msg = run_scenario()
+        if err_msg != "":
+            print(err_msg)
             quit(1)
         elif result != "":
             print(result)

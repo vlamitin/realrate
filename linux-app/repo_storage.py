@@ -7,7 +7,7 @@ import repo_config
 
 
 def get_selected():
-    """returns (selectedFrom, selectedTo, errMsg)
+    """returns (selectedFrom, selectedTo, err_msg)
     """
     storage, err_msg = _get_storage()
     if err_msg != "":
@@ -17,7 +17,7 @@ def get_selected():
 
 
 def get_rates_as_graph():
-    """returns (graph_dict, errMsg), graph example:
+    """returns (graph_dict, err_msg), graph example:
     {
       "BTC": {"USDT": 69784.7982867},
       "USDT": {"BTC": 0.00001432976843884617181026619031, "USD": 1},
@@ -48,7 +48,7 @@ def get_rates_as_graph():
 
 
 def set_selected_from(code):
-    """returns errMsg
+    """returns err_msg
     """
     storage, err_msg = _get_storage()
     if err_msg != "":
@@ -59,7 +59,7 @@ def set_selected_from(code):
 
 
 def set_selected_to(code):
-    """returns errMsg
+    """returns err_msg
     """
     storage, err_msg = _get_storage()
     if err_msg != "":
@@ -70,7 +70,7 @@ def set_selected_to(code):
 
 
 def _write_storage(storage):
-    """returns errMsg
+    """returns err_msg
     """
     configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(pathlib.Path(__file__).parent.resolve()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
@@ -89,7 +89,7 @@ def _write_storage(storage):
 
 
 def add_favorite(code, code_type):
-    """returns (added<bool>, errMsg)
+    """returns (added<bool>, err_msg)
     """
     storage, err_msg = _get_storage()
     if err_msg != "":
@@ -112,7 +112,7 @@ def add_favorite(code, code_type):
 
 
 def clean_favorite(code, code_type):
-    """returns (cleaned<bool>, errMsg)
+    """returns (cleaned<bool>, err_msg)
     """
     storage, err_msg = _get_storage()
     if err_msg != "":
@@ -135,7 +135,7 @@ def clean_favorite(code, code_type):
 
 
 def _get_storage():
-    """returns (storage, errMsg)
+    """returns (storage, err_msg)
     """
     configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(pathlib.Path(__file__).parent.resolve()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")

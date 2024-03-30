@@ -14,7 +14,7 @@ def parse_args(args_dict):
 
 
 def clean_input(dirty):
-    """returns (successMsg, errMsg)
+    """returns (successMsg, err_msg)
     """
     num_float, err_msg = _try_float(dirty)
     if err_msg == "":
@@ -32,7 +32,7 @@ def clean_input(dirty):
 
 
 def to_num(dirty):
-    """returns (num, errMsg)
+    """returns (num, err_msg)
     """
     num_float, err_msg = _try_float(dirty)
     if err_msg == "":
@@ -46,7 +46,7 @@ def to_num(dirty):
 
 
 def _try_float(dirty):
-    """returns (int, errMsg)
+    """returns (int, err_msg)
     """
     to_clean_num_format = dirty.replace(" ", "").replace(",", "")
     match = re.search("^-?\d+\.\d+", to_clean_num_format)
@@ -56,7 +56,7 @@ def _try_float(dirty):
 
 
 def _try_int(dirty):
-    """returns (int, errMsg)
+    """returns (int, err_msg)
     """
     to_clean_num_format = dirty.replace(" ", "").replace(",", "")
     match = re.search("^-?\d+", to_clean_num_format)
@@ -66,7 +66,7 @@ def _try_int(dirty):
 
 
 def _try_first_word(dirty):
-    """returns (int, errMsg)
+    """returns (int, err_msg)
     """
     to_clean_words_format = re.sub(r"[-+=.,:;!@#%^&*()]", " ", dirty)
     to_clean_words_format = to_clean_words_format.replace("  ", " ")

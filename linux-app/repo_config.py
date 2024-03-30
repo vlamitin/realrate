@@ -4,7 +4,7 @@ import pathlib
 
 
 def validate_code(code):
-    """returns (corr_code, type<fiat|crypto>, errMsg);
+    """returns (corr_code, type<fiat|crypto>, err_msg);
     """
     config, err_msg = _get_config()
     if err_msg != "":

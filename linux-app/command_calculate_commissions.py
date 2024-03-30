@@ -20,7 +20,7 @@ def parse_args(args_dict):
 
 
 def calculate_comissions(selected_rate):
-    """returns (successMsg, errMsg)
+    """returns (successMsg, err_msg)
     """
     selected_rate_num, err_msg = command_clean_input.to_num(selected_rate)
     if err_msg != "":
@@ -152,7 +152,7 @@ def __moneyfmt(value, places=2, curr='', sep=' ', dp='.',
 
 
 def calculate_market_rate(graph, code_from, code_to):
-    """ return (rate<number>, errMsg)
+    """ return (rate<number>, err_msg)
     """
     codes_path = _get_shortest_path(graph, code_from, code_to)
     if len(codes_path) == 0:
