@@ -3,6 +3,18 @@ import os
 import pathlib
 
 
+def get_cb_api_token():
+    """returns (api_key<str>, err_msg);
+    """
+    config, err_msg = _get_config()
+    if err_msg != "":
+        return "", err_msg
+    if config['apiTokenCurrencybeacon'] == "":
+        return "", "token is empty!"
+
+    return config['apiTokenCurrencybeacon'], ""
+
+
 def validate_code(code):
     """returns (corr_code, type<fiat|crypto>, err_msg);
     """
