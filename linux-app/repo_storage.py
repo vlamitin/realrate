@@ -3,8 +3,9 @@ import os
 import repo_config
 
 
-# returns (selectedFrom, selectedTo, errMsg)
 def get_selected():
+    """returns (selectedFrom, selectedTo, errMsg)
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return "", "", err_msg
@@ -12,18 +13,33 @@ def get_selected():
     return storage['selectedFrom'], storage['selectedTo'], ""
 
 
-
-# returns (fetchedCryptoRates, fetchedFiatRates, fetchedCryptoToFiatRates, errMsg)
 def get_rates():
+    """returns (fetchedCryptoRates, fetchedFiatRates, fetchedCryptoToFiatRates, errMsg)
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return None, None, None, err_msg
 
-    return storage['fetchedCryptoRates'], storage['fetchedFiatRates'],  storage['fetchedCryptoToFiatRates'], ""
+    return storage['fetchedCryptoRates'], storage['fetchedFiatRates'], storage['fetchedCryptoToFiatRates'], ""
 
 
-# returns errMsg
+def get_rates_as_graph():
+    """returns (graph_dict, errMsg), graph example:
+    {
+      "BTC": {"USDT": 69784.7982867},
+      "USDT": {"BTC": 0.00001432976843884617181026619031, "USD": 1},
+      "USDC": {"USD": 1},
+      "DAI": {"USD": 1},
+      "USD": {"USDT": 1, "USDC": 1, "DAI": 1, "KZT": 449.836},
+      "KZT": {"USD": 0.002223032394028045713758555164, "EUR": 0.002054316118164263231956302143},
+      "EUR": {"KZT": 486.78}
+    }
+    """
+
+
 def set_selected_from(code):
+    """returns errMsg
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return f"failed to set code: {err_msg}"
@@ -32,8 +48,9 @@ def set_selected_from(code):
     return _write_storage(storage)
 
 
-# returns errMsg
 def set_selected_to(code):
+    """returns errMsg
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return f"failed to set code: {err_msg}"
@@ -42,8 +59,9 @@ def set_selected_to(code):
     return _write_storage(storage)
 
 
-# return errMsg
 def _write_storage(storage):
+    """returns errMsg
+    """
     configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
@@ -60,8 +78,9 @@ def _write_storage(storage):
         return f"something went wrong when write storage"
 
 
-# returns (added<bool>, errMsg)
 def add_favorite(code, code_type):
+    """returns (added<bool>, errMsg)
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return False, f"failed to add favorite: {err_msg}"
@@ -82,8 +101,9 @@ def add_favorite(code, code_type):
     return True, ""
 
 
-# returns (cleaned<bool>, errMsg)
 def clean_favorite(code, code_type):
+    """returns (cleaned<bool>, errMsg)
+    """
     storage, err_msg = _get_storage()
     if err_msg != "":
         return False, f"failed to clean favorite: {err_msg}"
@@ -104,8 +124,9 @@ def clean_favorite(code, code_type):
     return True, ""
 
 
-# returns (storage, errMsg)
 def _get_storage():
+    """returns (storage, errMsg)
+    """
     configs_dir = os.getenv('RR_CONFIGS_DIR', os.path.abspath(os.getcwd()))
     storage_path = os.path.join(configs_dir, "rr_storage.json")
     try:
@@ -122,8 +143,7 @@ def _get_storage():
 
 if __name__ == '__main__':
     try:
-        print(set_selected_from("euro"))
-        # print(set_selected_to("euro"))
+        print(set_selected_to("EUR"))
     except KeyboardInterrupt:
         print(f"KeyboardInterrupt, exiting ...")
         quit(0)

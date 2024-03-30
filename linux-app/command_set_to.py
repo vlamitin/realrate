@@ -14,8 +14,9 @@ def parse_args(args_dict):
     return args_dict['code'] and args_dict['code'][0] or ''
 
 
-# returns (successMsg, errMsg)
 def set_to(code):
+    """returns (successMsg, errMsg)
+    """
     corr_code, _, err_msg = repo_config.validate_code(code)
     if err_msg != "":
         return "", f"failed to set 'to': {err_msg}"

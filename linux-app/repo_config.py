@@ -2,8 +2,9 @@ import json
 import os
 
 
-# returns (corr_code, type<fiat|crypto>, errMsg);
 def validate_code(code):
+    """returns (corr_code, type<fiat|crypto>, errMsg);
+    """
     config, err_msg = _get_config()
     if err_msg != "":
         return "", "", f"failed to validate: {err_msg}"
@@ -17,7 +18,6 @@ def validate_code(code):
             return x['code'], "fiat", ""
 
     return "", "", f"No fiat or crypto with code '{code}' found in supported"
-
 
 
 def _get_config():

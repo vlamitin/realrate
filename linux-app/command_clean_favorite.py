@@ -14,8 +14,10 @@ def parse_args(args_dict):
     return args_dict['code'] and args_dict['code'][0] or ''
 
 
-# returns (successMsg, errMsg)
+
 def clean_favorite(code):
+    """returns (successMsg, errMsg)
+    """
     corr_code, code_type, err_msg = repo_config.validate_code(code)
     if err_msg != "":
         return "", f"failed to clean favorite: {err_msg}"

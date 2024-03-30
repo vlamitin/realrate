@@ -8,8 +8,9 @@ import command_calculate_commissions
 import command_clean_input
 
 
-# returns (result<str>, errMsg)
 def run_scenario():
+    """returns (result<str>, errMsg)
+    """
     arg_parser = argparse.ArgumentParser(prog="realrate", description="Type realrate {command} -h for each command help")
     subparsers = arg_parser.add_subparsers(title="commands", dest="command")
 
