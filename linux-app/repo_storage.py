@@ -1,3 +1,4 @@
+from decimal import *
 import json
 import os
 import pathlib
@@ -15,16 +16,6 @@ def get_selected():
     return storage['selectedFrom'], storage['selectedTo'], ""
 
 
-def get_rates():
-    """returns (fetchedCryptoRates, fetchedFiatRates, fetchedCryptoToFiatRates, errMsg)
-    """
-    storage, err_msg = _get_storage()
-    if err_msg != "":
-        return None, None, None, err_msg
-
-    return storage['fetchedCryptoRates'], storage['fetchedFiatRates'], storage['fetchedCryptoToFiatRates'], ""
-
-
 def get_rates_as_graph():
     """returns (graph_dict, errMsg), graph example:
     {
@@ -37,15 +28,23 @@ def get_rates_as_graph():
       "EUR": {"KZT": 486.78}
     }
     """
-    return {
-        "BTC": {"USDT": 69784.7982867},
-        "USDT": {"BTC": 0.00001432976843884617181026619031, "USD": 1},
-        "USDC": {"USD": 1},
-        "DAI": {"USD": 1},
-        "USD": {"USDT": 1, "USDC": 1, "DAI": 1, "KZT": 449.836},
-        "KZT": {"USD": 0.002223032394028045713758555164, "EUR": 0.002054316118164263231956302143},
-        "EUR": {"KZT": 486.78}
-    }, ""
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return "", err_msg
+
+    graph = {}
+    for rate in storage['fetchedCryptoRates'] + storage['fetchedFiatRates'] + storage['fetchedCryptoToFiatRates']:
+        if rate['from'] not in graph:
+            graph[rate['from']] = {}
+        if rate['to'] not in graph:
+            graph[rate['to']] = {}
+
+        graph[rate['from']][rate['to']] = rate['rate']
+
+        if rate['from'] not in rate['to']:
+            graph[rate['to']][rate['from']] = float(Decimal(1) / Decimal(rate['rate']))
+
+    return graph, ""
 
 
 def set_selected_from(code):
@@ -154,7 +153,7 @@ def _get_storage():
 
 if __name__ == '__main__':
     try:
-        print(set_selected_to("EUR"))
+        print(get_rates_as_graph())
     except KeyboardInterrupt:
         print(f"KeyboardInterrupt, exiting ...")
         quit(0)
