@@ -1,5 +1,5 @@
 import asyncio
-import datetime
+from datetime import datetime
 
 import requests
 from requests.exceptions import HTTPError
@@ -9,10 +9,10 @@ def get_rates(codes_crypto):
     """ Gets crypto to USD rates from rate.sx, returns [...rates]
     WARN! returns only items that were successfully fetched
     >>> get_rates(["USDT", "BTC"])
-    '[{"from": "USDT","to": "USD","rate": 1,"updatedAt": "2024-03-27T16:17:23.556Z"}]'
+    '[{"from": "USDT","to": "USD","rate": 1,"updatedAt": "2024-03-27 16:17:23"}]'
     (suppose that in example above we've failed to fetch BTC price)
     """
-    results = asyncio.get_event_loop().run_until_complete(async_get_http_results(codes_crypto))
+    results = asyncio.get_event_loop().run_until_complete(_async_get_http_results(codes_crypto))
 
     rates = []
     for i in range(len(codes_crypto)):
@@ -23,20 +23,20 @@ def get_rates(codes_crypto):
             "from": codes_crypto[i],
             "to": "USD",
             "rate": float(results[i][0]),
-            "updatedAt": datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')[:-3]
+            "updatedAt": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         })
 
     return rates
 
 
-async def async_get_http_results(codes_crypto):
+async def _async_get_http_results(codes_crypto):
     loop = asyncio.get_event_loop()
 
-    futures = [loop.run_in_executor(None, __http_get, f"http://rate.sx/1{code}") for code in codes_crypto]
+    futures = [loop.run_in_executor(None, _http_get, f"http://rate.sx/1{code}") for code in codes_crypto]
     return [await x for x in futures]
 
 
-def __http_get(url_str):
+def _http_get(url_str):
     """returns (responseText<str>, err_msg)
     """
     try:

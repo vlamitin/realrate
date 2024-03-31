@@ -1,5 +1,6 @@
 {
   "apiTokenCurrencybeacon": "klasdTdlkeYnllkasjfdhlk6asdfh",
+  "ratesMaxLifeMinutes": 15,
   "supportedCrypto": [
     {
       "code": "USDT",

@@ -15,11 +15,14 @@ def parse_args(args_dict):
 
 
 def add_favorite(code):
-    """returns (successMsg, err_msg)
+    """returns (success_msg, err_msg)
     """
-    corr_code, code_type, err_msg = repo_config.validate_code(code)
+    results, err_msg = repo_config.validate_codes([code])
     if err_msg != "":
         return "", f"failed to add favorite: {err_msg}"
+    corr_code, code_type, valid = results[0]
+    if not valid:
+        return "", f"failed to add favorite: '{code}' is not supported"
 
     added, err_msg = repo_storage.add_favorite(corr_code, code_type)
     if err_msg != "":

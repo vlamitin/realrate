@@ -14,7 +14,7 @@ def parse_args(args_dict):
 
 
 def clean_input(dirty):
-    """returns (successMsg, err_msg)
+    """returns (success_msg, err_msg)
     """
     num_float, err_msg = _try_float(dirty)
     if err_msg == "":

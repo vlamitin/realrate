@@ -2,6 +2,7 @@ from decimal import *
 import repo_config
 import repo_storage
 import command_clean_input
+import command_force_update_rates
 
 DESCRIPTION = 'shows comparison of selected price with fair market price (selected price should be the number, and "from" and "to" should be previously set)'
 
@@ -20,7 +21,7 @@ def parse_args(args_dict):
 
 
 def calculate_comissions(selected_rate):
-    """returns (successMsg, err_msg)
+    """returns (success_msg, err_msg)
     """
     selected_rate_num, err_msg = command_clean_input.to_num(selected_rate)
     if err_msg != "":
@@ -34,8 +35,7 @@ def calculate_comissions(selected_rate):
     if sel_to == "":
         return "", "Nothing is selected as 'to'"
 
-    _, from_type, _ = repo_config.validate_code(sel_from)
-    _, to_type, _ = repo_config.validate_code(sel_to)
+    _, _ = command_force_update_rates.update_outdated_rates()
 
     graph, err_msg = repo_storage.get_rates_as_graph()
     if err_msg != "":

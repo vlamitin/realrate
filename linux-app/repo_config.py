@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 import pathlib
@@ -15,22 +16,45 @@ def get_cb_api_token():
     return config['apiTokenCurrencybeacon'], ""
 
 
-def validate_code(code):
-    """returns (corr_code, type<fiat|crypto>, err_msg);
+def is_rate_outdated(updated_at):
+    """returns (bool<true if outdated, false if fresh>, err_msg);
     """
     config, err_msg = _get_config()
     if err_msg != "":
-        return "", "", f"failed to validate: {err_msg}"
+        return False, err_msg
 
-    for x in config['supportedCrypto']:
-        if x['code'].lower() == code.lower() or code.lower() in [i.lower() for i in x['synonyms']]:
-            return x['code'], "crypto", ""
+    updated_at_ts = datetime.timestamp(datetime.strptime(updated_at, "%Y-%m-%d %H:%M:%S"))
+    now_ts = datetime.timestamp(datetime.now())
 
-    for x in config['supportedFiat']:
-        if x['code'].lower() == code.lower() or code.lower() in [i.lower() for i in x['synonyms']]:
-            return x['code'], "fiat", ""
+    if now_ts - updated_at_ts > config['ratesMaxLifeMinutes'] * 60:
+        return True, ""
+    return False, ""
 
-    return "", "", f"No fiat or crypto with code '{code}' found in supported"
+
+def validate_codes(codes):
+    """returns ([(corr_code, type<fiat|crypto>, is_valid<bool>)], err_msg);
+    """
+    if len(codes) == 0:
+        return [], f"empty codes to validate"
+    config, err_msg = _get_config()
+    if err_msg != "":
+        return [], f"failed to validate: {err_msg}"
+
+    results = []
+    for code in codes:
+        for x in config['supportedCrypto']:
+            if x['code'].lower() == code.lower() or code.lower() in [i.lower() for i in x['synonyms']]:
+                results.append((x['code'], "crypto", True))
+                break
+        else:
+            for x in config['supportedFiat']:
+                if x['code'].lower() == code.lower() or code.lower() in [i.lower() for i in x['synonyms']]:
+                    results.append((x['code'], "fiat", True))
+                    break
+            else:
+                results.append(("", "", False))
+
+    return results, ""
 
 
 def _get_config():
@@ -50,10 +74,15 @@ def _get_config():
 
 if __name__ == '__main__':
     try:
-        print(validate_code("USDT"))
-        print(validate_code("usdt"))
-        print(validate_code("tetHer"))
-        print(validate_code("sdf"))
+        print(validate_codes(["USDT"]))
+        print(validate_codes(["usdt"]))
+        print(validate_codes(["tetHer"]))
+        print(validate_codes(["sdf"]))
+        print(validate_codes(["tenge"]))
+        print(validate_codes(["USDT", "USDC", "DAI", "BTC", "EUR", "USD", "KZT"]))
+        print(is_rate_outdated("2024-03-27 16:17:23"))
+        print(is_rate_outdated("2024-03-31 00:01:23"))
+        print(is_rate_outdated("2024-03-30 23:45:23"))
     except KeyboardInterrupt:
         print(f"KeyboardInterrupt, exiting ...")
         quit(0)

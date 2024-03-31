@@ -15,7 +15,7 @@
       "from": "BTC",
       "to": "USDT",
       "rate": 69784.7982867,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     }
   ],
   "fetchedFiatRates": [
@@ -23,13 +23,13 @@
       "from": "EUR",
       "to": "KZT",
       "rate": 486.78,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     },
     {
       "from": "USD",
       "to": "KZT",
       "rate": 449.836,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     }
   ],
   "fetchedCryptoToFiatRates": [
@@ -37,19 +37,19 @@
       "from": "USDT",
       "to": "USD",
       "rate": 1,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     },
     {
       "from": "USDC",
       "to": "USD",
       "rate": 1,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     },
     {
       "from": "DAI",
       "to": "USD",
       "rate": 1,
-      "updatedAt": "2024-03-27T16:17:23.556Z"
+      "updatedAt": "2024-03-27 16:17:23"
     }
   ]
 }

@@ -15,12 +15,16 @@ def parse_args(args_dict):
 
 
 def set_to(code):
-    """returns (successMsg, err_msg)
+    """returns (success_msg, err_msg)
     """
-    corr_code, _, err_msg = repo_config.validate_code(code)
+    results, err_msg = repo_config.validate_codes([code])
     if err_msg != "":
         return "", f"failed to set 'to': {err_msg}"
+    corr_code, _, valid = results[0]
+    if not valid:
+        return "", f"failed to set to: '{code}' is not supported"
 
+    # TODO add check that selected should be in favorites
     err_msg = repo_storage.set_selected_to(corr_code)
     if err_msg != "":
         return "", f"failed to set 'to': {err_msg}"
