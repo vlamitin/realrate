@@ -47,9 +47,9 @@ def calculate_comissions(selected_rate):
 
     commission = (selected_rate_num - market_rate) / market_rate * 100
     if commission > 0:
-        return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} includes ~{__fmt(commission)}% commission", ""
+        return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is ~{__fmt(commission)}% MORE", ""
     elif commission < 0:
-        return f"Good deal! Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is ~{__fmt(abs(commission))}% more profitable", ""
+        return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is ~{__fmt(commission)}% LESS", ""
     else:
         return f"Good deal! Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is almost the same as market rate", ""
 
@@ -91,12 +91,12 @@ def _get_shortest_path(graph, code1, code2):
 def __fmt(value):
     decimal_value = Decimal(value)
     if abs(decimal_value) < 0.01:
-        return __moneyfmt(value, places=12)
+        return __moneyfmt(abs(value), places=12)
     elif abs(decimal_value) < 1:
-        return __moneyfmt(value, places=4)
+        return __moneyfmt(abs(value), places=4)
     elif abs(decimal_value) < 3:
-        return __moneyfmt(value, places=3)
-    return __moneyfmt(value, places=2)
+        return __moneyfmt(abs(value), places=3)
+    return __moneyfmt(abs(value), places=2)
 
 
 def __moneyfmt(value, places=2, curr='', sep=' ', dp='.',

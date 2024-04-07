@@ -40,7 +40,7 @@ def force_update_rates():
     if err_msg != "":
         return "", f"failed to update rates: {err_msg}"
 
-    return f"{updated} updated, {inserted} inserted, {total} new total, {len(fiat_rates)} fiat fetched, {len(crypto_rates)} crypto fetched", ""
+    return f"{updated} updated, {inserted} inserted, {total} total, {len(fiat_rates)} fiat fetched, {len(crypto_rates)} crypto fetched", ""
 
 
 if __name__ == '__main__':
