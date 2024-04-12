@@ -2,6 +2,7 @@ import repo_config
 import repo_storage
 import api_currencybeacon
 import api_rate_sx
+import api_coinmarketcap
 
 DESCRIPTION = 'updates saved rates even if they are not outdated according to config'
 
@@ -30,11 +31,25 @@ def force_update_rates():
     if err_msg != "":
         return "", f"failed to update rates: {err_msg}"
 
+    crypto_provider, _, err_msg = repo_storage.get_rates_providers()
+    if err_msg != "":
+        return "", f"failed to update rates: {err_msg}"
+
     fiat_rates, err_msg = api_currencybeacon.get_rates_fiat(codes_fiat)
     if err_msg != "":
         return "", f"failed to update rates: {err_msg}"
 
-    crypto_rates = api_rate_sx.get_rates(codes_crypto)
+    crypto_rates = []
+    if crypto_provider == "rate.sx":
+        crypto_rates = api_rate_sx.get_rates(codes_crypto)
+    elif crypto_provider == "pro-api.coinmarketcap.com":
+        crypto_rates, err_msg = api_coinmarketcap.get_rates(codes_crypto)
+        if err_msg != "":
+            return "", f"failed to update rates: {err_msg}"
+
+    err_msg = repo_storage.delete_old_rates()
+    if err_msg != "":
+        return "", f"failed to update rates: {err_msg}"
 
     updated, inserted, total, err_msg = repo_storage.upsert_rates(crypto_rates + fiat_rates)
     if err_msg != "":

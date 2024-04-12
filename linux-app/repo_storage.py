@@ -27,6 +27,16 @@ def get_favorites():
     return storage['favoriteCrypto'], storage['favoriteFiat'], ""
 
 
+def get_rates_providers():
+    """returns (crypto_rates_provider, fiat_rates_provider, err_msg)
+    """
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return "", "", err_msg
+
+    return storage['selectedCryptoRatesProvider'], storage['selectedFiatRatesProvider'], ""
+
+
 def get_oldest_rate_update():
     """returns (updated_at<str>, err_msg)
     """
@@ -95,6 +105,19 @@ def set_selected_to(code):
         return f"failed to set code: {err_msg}"
 
     storage['selectedTo'] = code
+    return _write_storage(storage)
+
+
+def delete_old_rates():
+    """returns err_msg
+    """
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return f"failed to delete old rates: {err_msg}"
+
+    storage['fetchedFiatRates'] = []
+    storage['fetchedCryptoRates'] = []
+    storage['fetchedCryptoToFiatRates'] = []
     return _write_storage(storage)
 
 
@@ -256,7 +279,8 @@ def _get_storage():
 
 if __name__ == '__main__':
     try:
-        print(upsert_rates([{'from': 'USD', 'to': 'KZT', 'rate': 445.87823098, 'updatedAt': '2024-03-30T23:40:01.2375'}]))
+        print(
+            upsert_rates([{'from': 'USD', 'to': 'KZT', 'rate': 445.87823098, 'updatedAt': '2024-03-30T23:40:01.2375'}]))
         # print(get_rates_as_graph())
     except KeyboardInterrupt:
         print(f"KeyboardInterrupt, exiting ...")

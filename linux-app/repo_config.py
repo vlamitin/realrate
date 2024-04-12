@@ -10,10 +10,21 @@ def get_cb_api_token():
     config, err_msg = _get_config()
     if err_msg != "":
         return "", err_msg
-    if config['apiTokenCurrencybeacon'] == "":
+    if config['apiTokenCurrencyBeacon'] == "":
         return "", "token is empty!"
 
-    return config['apiTokenCurrencybeacon'], ""
+    return config['apiTokenCurrencyBeacon'], ""
+
+def get_cmc_api_token():
+    """returns (api_key<str>, err_msg);
+    """
+    config, err_msg = _get_config()
+    if err_msg != "":
+        return "", err_msg
+    if config['apiTokenCoinMarketCap'] == "":
+        return "", "token is empty!"
+
+    return config['apiTokenCoinMarketCap'], ""
 
 
 def is_rate_outdated(updated_at):

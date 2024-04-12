@@ -7,6 +7,7 @@ import command_clean_favorite
 import command_calculate_commissions
 import command_clean_input
 import command_force_update_rates
+import command_get_rate
 
 
 def run_scenario():
@@ -22,6 +23,7 @@ def run_scenario():
     command_calculate_commissions.add_arguments(subparsers.add_parser('calculate_comissions', help=command_calculate_commissions.DESCRIPTION))
     command_clean_input.add_arguments(subparsers.add_parser('clean_input', help=command_clean_input.DESCRIPTION))
     subparsers.add_parser('update_rates', help=command_force_update_rates.DESCRIPTION)
+    command_get_rate.add_arguments(subparsers.add_parser('get_rate', help=command_get_rate.DESCRIPTION))
 
     # get_rates - shows rate for 1 unit, depending on what is selected
     #   if crypto is selected - shows its rates in favorite fiats; if fiat is selected - shows favorite crypto rates
@@ -45,6 +47,9 @@ def run_scenario():
         return command_clean_input.clean_input(command_clean_input.parse_args(args_dict))
     elif args_dict['command'] == 'update_rates':
         return command_force_update_rates.force_update_rates()
+    elif args_dict['command'] == 'get_rate':
+        from_code, to_code = command_get_rate.parse_args(args_dict)
+        return command_get_rate.get_rate(from_code, to_code)
     # elif args_dict['command'] == 'merge_prs_local':
     #     arguments_dict = merge_prs_local.parse_args(args_dict)
     #     merge_prs_local.run_scenario(arguments_dict['merge_branch_name'], arguments_dict['base_branch_name'])

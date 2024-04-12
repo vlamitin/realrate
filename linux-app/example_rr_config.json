@@ -1,5 +1,15 @@
 {
-  "apiTokenCurrencybeacon": "klasdTdlkeYnllkasjfdhlk6asdfh",
+  "apiTokenCurrencyBeacon": "klasdTdlkeYnllkasjfdhlk6asdfh",
+  "apiTokenCoinMarketCap": "asdgasdg-adsgasd-yjrye-sfgsfg-sdfgsdfg",
+  "supportedRatesProviders": {
+    "fiat": [
+      "api.currencybeacon.com"
+    ],
+    "crypto": [
+      "rate.sx",
+      "pro-api.coinmarketcap.com"
+    ]
+  },
   "ratesMaxLifeMinutes": 15,
   "supportedCrypto": [
     {

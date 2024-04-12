@@ -1,6 +1,8 @@
 {
   "selectedFrom": "USDT",
   "selectedTo": "KZT",
+  "selectedCryptoRatesProvider": "pro-api.coinmarketcap.com",
+  "selectedFiatRatesProvider": "api.currencybeacon.com",
   "favoriteCrypto": [
     "USDT",
     "BTC"

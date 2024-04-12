@@ -2,6 +2,7 @@
 - [x] PoC on linux
 - [ ] Research competitors
 - [ ] PoC UX on firefox extension (hardcoded rates, but all buttons and popups work as intended)
+- [x] Coinmarketcap api as crypto rates provider
 
 ## Good competitors
 - [Direct Currency Converter](https://addons.mozilla.org/en-US/firefox/addon/direct-currency-converter-2/)

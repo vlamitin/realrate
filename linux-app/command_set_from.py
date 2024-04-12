@@ -29,4 +29,8 @@ def set_from(code):
     if err_msg != "":
         return "", f"failed to set 'from': {err_msg}"
 
-    return f"Successfully set {corr_code} as 'from'", ""
+    code_from, code_to, err = repo_storage.get_selected()
+    if err_msg != "":
+        return "", f"failed to set 'from': {err_msg}"
+
+    return f"Current pair is {code_from} -> {code_to}", ""

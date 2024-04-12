@@ -29,7 +29,7 @@ def calculate_comissions(selected_rate):
 
     sel_from, sel_to, err_msg = repo_storage.get_selected()
     if err_msg != "":
-        return "", f"failed to calculate comissions:{err_msg}"
+        return "", f"failed to calculate comissions: {err_msg}"
     if sel_from == "":
         return "", "Nothing is selected as 'from'"
     if sel_to == "":
@@ -39,11 +39,11 @@ def calculate_comissions(selected_rate):
 
     graph, err_msg = repo_storage.get_rates_as_graph()
     if err_msg != "":
-        return "", f"failed to calculate comissions:{err_msg}"
+        return "", f"failed to calculate comissions: {err_msg}"
 
     market_rate, err_msg = calculate_market_rate(graph, sel_from, sel_to)
     if err_msg != "":
-        return "", f"failed to calculate comissions:{err_msg}"
+        return "", f"failed to calculate comissions: {err_msg}"
 
     commission = (selected_rate_num - market_rate) / market_rate * 100
     if commission > 0:
@@ -51,7 +51,7 @@ def calculate_comissions(selected_rate):
     elif commission < 0:
         return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is ~{__fmt(commission)}% LESS", ""
     else:
-        return f"Good deal! Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is almost the same as market rate", ""
+        return f"Market rate: 1 {sel_from} = {__fmt(market_rate)} {sel_to}. So, selected rate {__fmt(selected_rate_num)} is THE SAME as market rate", ""
 
 
 def _get_shortest_path(graph, code1, code2):
