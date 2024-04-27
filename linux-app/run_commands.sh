@@ -40,8 +40,30 @@ calculateComissions() {
   fi
 }
 
+convert() {
+  result=$(python "$dir_path/realrate.py" convert  --selected_amount "$1")
+  lastCode=$?
+
+  if [ $lastCode -eq 0 ]; then
+    notify-send -t 35000 "Converted below:" "\n$result"
+  else
+    verboseExit "Fail" "\n$result"
+  fi
+}
+
 setTo() {
   result=$(python "$dir_path/realrate.py" set_to  --code "$1")
+  lastCode=$?
+
+  if [ $lastCode -eq 0 ]; then
+    notify-send -t 10000 "Success!" "\n$result"
+  else
+    notify-send -t 35000 -u critical "Fail" "\n$result"
+  fi
+}
+
+switchSelected() {
+  result=$(python "$dir_path/realrate.py" switch_selected)
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
@@ -90,12 +112,14 @@ askWhatToDoSel() {
   lastCode=$?
 
   if [ $lastCode -eq 0 ]; then
-    answersel=$(printf "Calculate comissions\\nUpdate rates\\nSet as 'from'\\nSet as 'to'\\nAdd to favorites\\nClean from favorites" | dmenu -i -p "What to do with '$cleanedSelResult'?") &&
+    answersel=$(printf "Convert\\nCalculate comissions\\nUpdate rates\\nSet as 'from'\\nSet as 'to'\\nSwitch selected\\nAdd to favorites\\nClean from favorites" | dmenu -i -p "What to do with '$cleanedSelResult'?") &&
     case "$answersel" in
       "Calculate comissions") calculateComissions "$cleanedSelResult";;
+      "Convert") convert "$cleanedSelResult";;
       "Update rates") updateRates;;
       "Set as 'from'") setFrom "$cleanedSelResult";;
       "Set as 'to'") setTo "$cleanedSelResult";;
+      "Switch selected") switchSelected;;
       "Add to favorites") addFavorite "$cleanedSelResult";;
       "Clean from favorites") cleanFavorite "$cleanedSelResult";;
       *) verboseExit "error!" "nothing selected!" ;;

@@ -108,6 +108,22 @@ def set_selected_to(code):
     return _write_storage(storage)
 
 
+def switch_selected():
+    """returns err_msg
+    """
+    storage, err_msg = _get_storage()
+    if err_msg != "":
+        return f"failed to switch selected: {err_msg}"
+
+    storage['selectedFrom'], storage['selectedTo'] = storage['selectedTo'], storage['selectedFrom']
+
+    err_msg = _write_storage(storage)
+    if err_msg != "":
+        return f"failed to switch selected: {err_msg}"
+
+    return ""
+
+
 def delete_old_rates():
     """returns err_msg
     """

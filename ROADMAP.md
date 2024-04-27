@@ -3,6 +3,10 @@
 - [ ] Research competitors
 - [ ] PoC UX on firefox extension (hardcoded rates, but all buttons and popups work as intended)
 - [x] Coinmarketcap api as crypto rates provider
+- [x] Add 'switch favorites' command
+- [ ] Add 'convert' command (to convert selected amount of favorite "from" to favorite "to")
+- [ ] Add 'set amount from' and 'reset amount from to 1' commands
+- [ ] Fix bug with reading 0,9392 as 9 392
 
 ## Good competitors
 - [Direct Currency Converter](https://addons.mozilla.org/en-US/firefox/addon/direct-currency-converter-2/)
