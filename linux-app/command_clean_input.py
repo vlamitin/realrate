@@ -48,7 +48,9 @@ def to_num(dirty):
 def _try_float(dirty):
     """returns (int, err_msg)
     """
-    to_clean_num_format = dirty.replace(" ", "").replace(",", "")
+    to_clean_num_format = (re.sub(r'^-?0,', '0.', dirty)
+                           .replace(" ", "")
+                           .replace(",", ""))
     match = re.search("^-?\d+\.\d+", to_clean_num_format)
     if match is None:
         return 0, "failed to convert to float"
@@ -79,6 +81,10 @@ def _try_first_word(dirty):
 
 if __name__ == '__main__':
     try:
+        print(clean_input("0,9392"))
+        print(clean_input("0,939.2"))
+        print(clean_input("3,307"))
+        print(clean_input("3,307.47"))
         print(clean_input("exiting"))
         print(clean_input("123,123,123asdf"))
         print(clean_input("-123 123 123asdf"))
