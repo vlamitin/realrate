@@ -18,7 +18,7 @@ def get_rates_fiat(codes_fiat):
         return [], f"failed to get rates: {err_msg}"
 
     requests_dict = _to_request_dict(codes_fiat)
-    results = asyncio.get_event_loop().run_until_complete(_async_get_http_results(requests_dict, api_token))
+    results = asyncio.run(_async_get_http_results(requests_dict, api_token))
 
     rates = []
     for result in results:
@@ -77,7 +77,7 @@ def _to_request_dict(codes_fiat):
 
 
 async def _async_get_http_results(requests_dict, api_token):
-    loop = asyncio.get_event_loop()
+    loop = asyncio.get_running_loop()
 
     futures = [loop.run_in_executor(None, _http_get,
                                     f"https://api.currencybeacon.com/v1/latest?base={code}&symbols={','.join(requests_dict[code])}&api_key={api_token}")

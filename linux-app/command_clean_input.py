@@ -16,15 +16,16 @@ def parse_args(args_dict):
 def clean_input(dirty):
     """returns (success_msg, err_msg)
     """
-    num_float, err_msg = _try_float(dirty)
+    stripped = dirty.strip()
+    num_float, err_msg = _try_float(stripped)
     if err_msg == "":
         return num_float, ""
 
-    num_int, err_msg = _try_int(dirty)
+    num_int, err_msg = _try_int(stripped)
     if err_msg == "":
         return num_int, ""
 
-    str_word, err_msg = _try_first_word(dirty)
+    str_word, err_msg = _try_first_word(stripped)
     if err_msg == "":
         return str_word, ""
 
